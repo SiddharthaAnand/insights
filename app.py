@@ -2,7 +2,7 @@ import os
 from flask import Flask, flash, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = "../tmp/"
+UPLOAD_FOLDER = "/tmp/"
 ALLOWED_EXTENSIONS = set(["txt"])
 
 app = Flask(__name__)
@@ -31,7 +31,7 @@ def upload_file():
             return redirect(request.url)
         if file and allowed_filename(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename ))
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file', filename=filename))
 
     return '''
