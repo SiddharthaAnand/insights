@@ -20,7 +20,9 @@
               const postData = new FormData();
               for(key in s3Data.fields){
                 postData.append(key, s3Data.fields[key]);
+                console.log(s3Data.fields[key]);
               }
+              console.log(s3Data.fields[key]);
               postData.append('file', file);
               xhr.onreadystatechange = () => {
                 if(xhr.readyState === 4){
