@@ -7,8 +7,7 @@ ALLOWED_EXTENSIONS = set(["txt"])
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER}"] = UPLOAD_FOLDER
-app.secret_key = 'insights'
-
+app.secret_key = "insights"
 
 def allowed_filename(filename):
     return '.' in filename and \
@@ -48,7 +47,7 @@ def sign_s3():
     S3_BUCKET = os.environ.get('S3_BUCKET_NAME')
     file_name = request.args.get('file_name')
     file_type = request.args.get('file_type')
-
+    print("S3_BUCKET", S3_BUCKET)
     s3 = boto3.client('s3')
 
     pre_signed_post = s3.generate_presigned_post(
@@ -69,4 +68,6 @@ def sign_s3():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.debug = True
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
