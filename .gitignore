@@ -1,0 +1,6 @@
+*.py[cod]
+__pycache__/
+venv_insights/
+Pipfile
+Pipfile.lock
+.idea/
