@@ -4,3 +4,4 @@ venv_insights/
 Pipfile
 Pipfile.lock
 .idea/
+.env

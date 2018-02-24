@@ -63,7 +63,7 @@ def sign_s3():
 
     return json.dumps({
         'data': pre_signed_post,
-        'url': 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, file_name)
+        'url': 'http://%s.s3.amazonaws.com/%s' % (S3_BUCKET, file_name)
     })
 
 
