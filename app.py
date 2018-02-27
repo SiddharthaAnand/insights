@@ -10,8 +10,8 @@ ALLOWED_EXTENSIONS = set(["txt"])
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER}"] = UPLOAD_FOLDER
 app.secret_key = "insights"
-#app.config.from_object("config")
-app.config.from_object("insights.config")
+app.config.from_object("config")
+#app.config.from_object("insights.config")
 
 
 def allowed_filename(filename):
@@ -54,4 +54,3 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port)
     '''
     app.run()
-    
