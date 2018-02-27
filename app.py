@@ -38,7 +38,7 @@ def upload_file():
             file.filename = secure_filename(file.filename)
             #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             output = upload_file_to_s3(file, app.config['S3_BUCKET'])
-            return str(output)
+            return render_template('uploadsuccess.html')
     return render_template('upload.html')
 
 
