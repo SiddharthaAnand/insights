@@ -24,7 +24,7 @@ def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
-@app.route('/upload', methods=["GET", "POST"])
+@app.route('/upload', methods=["POST"])
 def upload_file():
     if request.method == "POST":
         if 'file' in request.files:
@@ -36,8 +36,8 @@ def upload_file():
 
         if file and allowed_filename(file.filename):
             file.filename = secure_filename(file.filename)
-            #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             output = upload_file_to_s3(file, app.config['S3_BUCKET'])
+            print("OUTPUT: ", output)
             return render_template('uploadsuccess.html')
     return render_template('upload.html')
 
