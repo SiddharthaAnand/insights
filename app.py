@@ -38,6 +38,8 @@ def upload_file():
             return redirect(request.url)
 
         if file and allowed_filename(file.filename):
+            print("type of file", type(file), type(file.filename))
+            print(file)
             file.filename = secure_filename(file.filename)
             output = upload_file_to_s3(file, app.config['S3_BUCKET'])
             print("OUTPUT: ", output)
@@ -53,9 +55,9 @@ def home():
 
 
 if __name__ == '__main__':
-    '''
     app.debug = True
     port = int(os.environ.get('PORT', 5001))
     app.run(host='0.0.0.0', port=port)
     '''
     app.run()
+    '''
