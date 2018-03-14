@@ -5,7 +5,7 @@ from helpers import *
 
 
 UPLOAD_FOLDER = "/tmp/"
-ALLOWED_EXTENSIONS = set(["txt"])
+ALLOWED_EXTENSIONS = set(["txt", ".csv"])
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER}"] = UPLOAD_FOLDER
@@ -36,7 +36,7 @@ def upload_file():
         if file.filename == '':
             print("FILE.FILENAME")
             return redirect(request.url)
-
+        print(file.readlines())
         if file and allowed_filename(file.filename):
             print("type of file", type(file), type(file.filename))
             print(file)
