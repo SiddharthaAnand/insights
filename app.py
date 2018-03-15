@@ -3,7 +3,6 @@ from flask import Flask, flash, request, redirect, url_for, send_from_directory,
 from werkzeug.utils import secure_filename
 from helpers import *
 
-
 UPLOAD_FOLDER = "/tmp/"
 ALLOWED_EXTENSIONS = set(["txt", ".csv"])
 
@@ -36,15 +35,23 @@ def upload_file():
         if file.filename == '':
             print("FILE.FILENAME")
             return redirect(request.url)
-        print(file.readlines())
         if file and allowed_filename(file.filename):
             print("type of file", type(file), type(file.filename))
-            print(file)
+            rows = file.readlines()
+            rows = [line.decode('utf-8').strip() for line in rows]
+            rows = [int(val) for val in rows if val != '']
+            total = 0
+            average = None
+            if len(rows) != 0:
+                for val in rows:
+                    total += val
+                average = total / len(rows)
             file.filename = secure_filename(file.filename)
             output = upload_file_to_s3(file, app.config['S3_BUCKET'])
             print("OUTPUT: ", output)
             print(app.config["S3_LOCATION"], file.filename)
-            return render_template('uploadsuccess.html')
+            #average = calculate_average(file)
+            return render_template('uploadsuccess.html', average=average)
     print("NOT POST")
     return render_template('upload.html')
 

@@ -18,8 +18,6 @@ def upload_file_to_s3(file, bucket_name, acl='public-read'):
     :return:
     """
     try:
-        print(S3_KEY)
-        print(S3_SECRET)
         s3.upload_fileobj(
             file,
             bucket_name,
@@ -34,3 +32,15 @@ def upload_file_to_s3(file, bucket_name, acl='public-read'):
     return "Uploaded successfully"
 
 
+def calculate_average(file_obj):
+    rows = file_obj.readlines()
+    rows = [line.decode('utf-8').strip() for line in rows]
+    rows = [int(val) for val in rows if val != '']
+    total = 0
+    average = None
+    if len(rows) != 0:
+        for val in rows:
+            total += val
+        average = total / len(rows)
+
+    return average

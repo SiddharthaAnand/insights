@@ -3,5 +3,10 @@
 <body>
 <title>Upload new File</title>
     <h1>Uploaded successfully!</h1>
+    {% if average %}
+        <h1> Average: {{ average }}</h1>
+    {% else %}
+        <h1> File not in proper format</h1>
+    {% endif %}
 </body>
 </html>
