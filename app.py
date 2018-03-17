@@ -32,9 +32,11 @@ def upload_file():
             print("NO FILE PART")
             return redirect(request.url)
         file = request.files['file']
+
         if file.filename == '':
             print("FILE.FILENAME")
             return redirect(request.url)
+
         if file and allowed_filename(file.filename):
             print("type of file", type(file), type(file.filename))
             rows = file.readlines()
@@ -42,6 +44,7 @@ def upload_file():
             rows = [int(val) for val in rows if val != '']
             total = 0
             average = None
+
             if len(rows) != 0:
                 for val in rows:
                     total += val
@@ -50,9 +53,14 @@ def upload_file():
             output = upload_file_to_s3(file, app.config['S3_BUCKET'])
             print("OUTPUT: ", output)
             print(app.config["S3_LOCATION"], file.filename)
-            #average = calculate_average(file)
-            return render_template('uploadsuccess.html', average=average)
-    print("NOT POST")
+            download_status = download_from_s3(app.config['S3_BUCKET'], file.filename)
+
+            if download_status is True:
+                print("Downloaded from S3 successfully")
+            else:
+                print("Unsuccessful")
+            return render_template('upload_success.html', average=average)
+
     return render_template('upload.html')
 
 
@@ -62,10 +70,10 @@ def home():
 
 
 if __name__ == '__main__':
-    '''
+
     app.debug = True
     port = int(os.environ.get('PORT', 5001))
     app.run(host='0.0.0.0', port=port)
     '''
     app.run()
-    
+    '''
