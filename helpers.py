@@ -1,4 +1,5 @@
-import boto3, botocore
+import boto3
+import botocore
 from config import S3_KEY, S3_SECRET
 
 s3 = boto3.resource('s3')
@@ -27,9 +28,22 @@ def upload_file_to_s3(file, bucket_name, acl='public-read'):
             }
         )
     except Exception as e:
-        print("Something happend", e)
+        print("Something", e)
         return e
     return "Uploaded successfully"
+
+
+def download_from_s3(bucket_name, filename):
+    try:
+        if s3 is not None:
+            response = s3.download_file(bucket_name, filename, 'my_local_file.txt')
+            print("I am here", response)
+    except botocore.exceptions.ClientError as e:
+        if e.response['Error']['Code'] == "404":
+            print("The object does not exist.")
+        else:
+            raise
+    return True
 
 
 def calculate_average(file_obj):
