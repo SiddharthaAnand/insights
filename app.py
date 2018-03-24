@@ -39,6 +39,7 @@ def upload_file():
 
         if file and allowed_filename(file.filename):
             print("type of file", type(file), type(file.filename))
+            '''
             rows = file.readlines()
             rows = [line.decode('utf-8').strip() for line in rows]
             rows = [int(val) for val in rows if val != '']
@@ -49,7 +50,9 @@ def upload_file():
                 for val in rows:
                     total += val
                 average = total / len(rows)
+            '''
             file.filename = secure_filename(file.filename)
+
             output = upload_file_to_s3(file, app.config['S3_BUCKET'])
             print("OUTPUT: ", output)
             print(app.config["S3_LOCATION"], file.filename)
@@ -59,7 +62,7 @@ def upload_file():
                 print("Downloaded from S3 successfully")
             else:
                 print("Unsuccessful")
-            return render_template('upload_success.html', average=average)
+            #return render_template('upload_success.html', average=average)
 
     return render_template('upload.html')
 
